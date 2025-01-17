@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nufarm Calculator</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <style>
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      .calculator {
+        padding: 5px 25px;
+        border: 1px solid #bbb;
+        background: #f9f9f9;
+      }
+      .calculator__title {
+        text-align: center;
+      }
+      .calculator__row {
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+      }
+      .calculator__row button {
+        display: inline-block;
+      }
+      .calculator__col label {
+        font-size: 16px;
+        color: #333;
+        font-weight: 700;
+        line-height: 15px;
+        min-height: 31px;
+      }
+      .calculator__col label span {
+        color: red;
+        font-size: 17px;
+      }
+      .calculator__col input {
+        width: 100%;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        text-align: right;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-sizing: border-box;
+      }
+      .calculator__col input#myEconomySec,
+      .calculator__col input#myEconomy {
+        color: #00aa4e;
+        font-weight: 700;
+      }
+      .calculator__col input::-webkit-outer-spin-button,
+      .calculator__col input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+      .calculator__col button {
+        color: #fff;
+        background-color: #00aa4e;
+      }
+      .calculator__col input:focus-visible,
+      #myNormEkv:focus-visible {
+        outline: none;
+      }
+      #myNormEkvi {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        text-align: right;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      }
+      .error {
+        margin-top: -7px;
+        color: red;
+        font-size: 12px;
+      }
+      @media (min-width: 320px) {
+        .calculator__col label {
+          font-size: calc(0.6875rem + ((1vw - 3.2px) * 0.3125));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="calculator row">
+        <div class="col-sm-12">
+          <div class="calculator__title mb-3">
+            Розрахуйте економію застосування препарату ЕКВІНОКС® у посівах сої у
+            порівнянні з іншим гербіцидом з діючею речовиною метрибузин (600 г/л
+            або 700 г/кг).
+            <hr />
+            Заповніть поля: вартість в $ без ПДВ одного літру або кг препарату
+            на основі метрибузину та кількість оброблюваних гектарів, оберить
+            норму внесення л/га для препарату ЕКВІНОКС® з випадаючого списку.
+            Калькулятор покаже економію!
+          </div>
+        </div>
+        <div class="calculator__row row">
+          <div class="calculator__col col-sm-6 col-12">
+            <label for="myPriceEkvi">Чесна ціна на ЕКВІНОКС®, $/л</label>
+            <input type="number" id="myPriceEkvi" value="70.70" readonly />
+          </div>
+          <div class="calculator__col col-sm-6 col-12">
+            <label for="myPrice"
+              >Ціна препарату на основі метрибузину, $/л (кг)
+              <span>*</span></label
+            >
+            <input
+              type="number"
+              id="myPrice"
+              class="require"
+              placeholder="0.00"
+            />
+            <span class="error"></span>
+          </div>
+        </div>
+        <div class="calculator__row row">
+          <div class="calculator__col col-sm-6 col-12">
+            <label for="myNormEkvi"
+              >Норма внесення ЕКВІНОКС®, л/га <span>*</span></label
+            >
+            <select name="normEkvi" id="myNormEkvi" class="require">
+              <option selected value="">Виберіть норму</option>
+              <option value="0.1" selected>0.1</option>
+              <option value="0.11">0.11</option>
+              <option value="0.12">0.12</option>
+            </select>
+            <span class="error"></span>
+          </div>
+          <div class="calculator__col col-sm-6 col-12">
+            <label for="myNorm"
+              >Норма внесення препарату на основі метрибузину, л (кг)/га</label
+            >
+            <input type="number" id="myNorm" readonly placeholder="0.00" />
+            <span class="error"></span>
+          </div>
+        </div>
+        <div class="calculator__row row">
+          <div class="calculator__col col-sm-6 col-12 text-center">
+            <label for="fieldArea">Площа поля, га <span>*</span></label>
+            <input
+              type="number"
+              id="fieldArea"
+              class="require"
+              placeholder="0.00"
+            />
+            <span class="error"></span>
+          </div>
+        </div>
+        <div class="calculator__row row">
+          <div class="calculator__col col-sm-6 col-12">
+            <label for="myCostEkvi">Вартість обробки 1 га, $ (ЕКВІНОКС®)</label>
+            <input type="number" id="myCostEkvi" readonly placeholder="0.00" />
+          </div>
+          <div class="calculator__col col-sm-6 col-12">
+            <label for="myCost"
+              >Вартість обробки 1 га, $ (препарат на основі метрибузину)</label
+            >
+            <input type="number" id="myCost" readonly placeholder="0.00" />
+          </div>
+        </div>
+        <div class="calculator__row row">
+          <div class="calculator__col col-sm-6 col-12">
+            <label for="myEconomy">Економія на 1 га, $</label>
+            <input type="number" id="myEconomy" readonly placeholder="0.00" />
+          </div>
+          <div class="calculator__col col-sm-6 col-12">
+            <label for="myEconomySec">Економія на Вашому полі, $</label>
+            <input
+              type="number"
+              id="myEconomySec"
+              readonly
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+        <div class="calculator__row row">
+          <div class="calculator__col col-sm-12 text-center">
+            <button class="btn">Очистити</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const calcContainer = document.querySelector('.calculator');
+      const myPriceEkvi = calcContainer.querySelector('#myPriceEkvi');
+      const myPrice = calcContainer.querySelector('#myPrice');
+      const myNormEkvi = calcContainer.querySelector('#myNormEkvi');
+      const myNorm = calcContainer.querySelector('#myNorm');
+      const fieldArea = calcContainer.querySelector('#fieldArea');
+      const myCostEkvi = calcContainer.querySelector('#myCostEkvi');
+      const myCost = calcContainer.querySelector('#myCost');
+      const myEconomy = calcContainer.querySelector('#myEconomy');
+      const myEconomySec = calcContainer.querySelector('#myEconomySec');
+      const requires = calcContainer.querySelectorAll('.require');
+      const clear = calcContainer.querySelector('button');
+      const select = calcContainer.querySelector('select');
+
+      function cost(input1, input2, result) {
+        const value1 = input1.value.trim();
+        const value2 = input2.value.trim();
+        const number1 = parseFloat(value1);
+        const number2 = parseFloat(value2);
+        let isValid = true;
+
+        requires.forEach((require) => {
+          const errorElement = require.nextElementSibling;
+          if (!require.value.trim()) {
+            errorElement.textContent = 'Заповніть це поле.';
+            let isValid = false;
+          } else {
+            errorElement.textContent = '';
+          }
+        });
+
+        if (isValid) {
+          result.value = (number1 * number2).toFixed(2);
+          const economy = myCost.value - myCostEkvi.value;
+          myEconomy.value = economy.toFixed(2);
+          myEconomy.value = economy.toFixed(2);
+          myEconomySec.value = (myEconomy.value * fieldArea.value).toFixed(2);
+
+          switch (myNormEkvi.value) {
+            case '0.1':
+              myNorm.value = '0.5';
+              break;
+            case '0.11':
+              myNorm.value = '0.6';
+              break;
+            case '0.12':
+              myNorm.value = '0.7';
+              break;
+            default:
+              myNorm.value = '';
+              break;
+          }
+        } else {
+          result.value = '';
+        }
+      }
+
+      fieldArea.addEventListener('input', () =>
+        cost(myPriceEkvi, myNormEkvi, myCostEkvi)
+      );
+      myNormEkvi.addEventListener('input', () =>
+        cost(myPriceEkvi, myNormEkvi, myCostEkvi)
+      );
+
+      myPrice.addEventListener('input', () => cost(myPrice, myNorm, myCost));
+      myNorm.addEventListener('input', () => cost(myPrice, myNorm, myCost));
+
+      clear.addEventListener('click', () => {
+        const inputs = calcContainer.querySelectorAll('input');
+        select.selectedIndex = 0;
+        requires.forEach((require) => {
+          const error = require.nextElementSibling;
+          error.textContent = '';
+        });
+        const firstInputVal = myPriceEkvi.value;
+        inputs.forEach((input) => {
+          if (input.value !== parseFloat(firstInputVal).toFixed(2)) {
+            input.value = '';
+          }
+        });
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        select.selectedIndex = 0;
+      });
+
+      window.onload = function () {
+        const height = document.body.scrollHeight;
+        window.parent.postMessage(height, '*');
+      };
+    </script>
+  </body>
+</html>
