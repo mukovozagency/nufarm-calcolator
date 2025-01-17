@@ -260,7 +260,8 @@
 
       myPrice.addEventListener('input', () => cost(myPrice, myNorm, myCost));
       myNorm.addEventListener('input', () => cost(myPrice, myNorm, myCost));
-
+      select.addEventListener('input', () => cost(myPrice, myNorm, myCost));
+      
       clear.addEventListener('click', () => {
         const inputs = calcContainer.querySelectorAll('input');
         select.selectedIndex = 0;
